@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="TripletCLIP: Improving Compositional Reasoning of CLIP via Synthetic Vision-Language Negatives">
+  <meta name="keywords"
+    content="TripletCLIP, CLIP, NegCLIP, Compositionality, Vision-Language, LLMs, Vision, NLP, T2I, Research, Demo, GitHub">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TripletCLIP: Improving Compositional Reasoning of CLIP via Synthetic Vision-Language Negatives</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-33J11TEJJD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-33J11TEJJD');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.8.0/gradio.js"></script>
+
+  <style>
+    #project-previews {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+      padding: 20px;
+    }
+
+    .project {
+      width: 300px;
+      /* Adjust as needed */
+      height: 320px;
+      /* Adjust as needed */
+      border: 1px solid #ddd;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .project img {
+      width: 100%;
+      /* Make image fill the container */
+      height: 200px;
+      /* Adjust height as needed */
+      object-fit: cover;
+    }
+
+    .project h3,
+    .project p {
+      margin: 5px 0;
+    }
+
+    /* Hover effect */
+    .project:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #project-previews a.project {
+      text-decoration: none;
+      /* Remove underline from links */
+      color: inherit;
+      /* Use the parent's text color */
+      display: block;
+      /* Make the anchor tag behave like a block element */
+    }
+
+    #project-previews a.project:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="https://maitreyapatel.com/">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://eclipse.vercel.app/">
+              ECLIPSE (Efficient T2I)
+            </a>
+            <a class="navbar-item" href="https://eclipse-t2i.github.io/Lambda-ECLIPSE/">
+              &lambda;-ECLIPSE (Personalized T2I)
+            </a>
+            <a class="navbar-item" href="https://conceptbed.github.io">
+              ConceptBed (T2I Evaluations)
+            </a>
+            <a class="navbar-item" href="https://wouaf.vercel.app">
+              WOUAF (Secure T2I)
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </nav>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title"> <span class="dnerf"><i>TripletCLIP </i></span>: <p
+                style="font-size:xx-large;">
+                Improving Compositional Reasoning of CLIP via Synthetic Vision-Language Negatives
+              </p>
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://maitreyapatel.com">Maitreya
+                  Patel</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/abhiram-kusumba-a077b8174">Abhiram Kusumba</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/sheng-cheng-661826118/">Sheng Cheng</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://sites.google.com/asu.edu/changhoonkim?pli=1">Changhoon Kim</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.tejasgokhale.com/" style="color:#f68946;font-weight:normal;">Tejas Gokhale</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.public.asu.edu/~cbaral/">Chitta
+                  Baral</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://yezhouyang.engineering.asu.edu/">Yezhou
+                  Yang</a>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><b style="color:#008AD7; font-weight:normal">&#x25B6</b>Arizona State
+                University;</span>
+              <span class="author-block"><b style="color:#f68946; font-weight:normal">&#x25B6</b>University of Maryland,
+                Baltimore County</span>
+            </div>
+
+            <br>
+            <div class="is-size-3 publication-authors">
+              <b>NeurIPS 2024</b>
+            </div>
+            <br>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="./static/docs/TripletCLIP__Camera_Ready_.pdf"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>PDF</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Huggingface -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/TripletCLIP"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai">🤗</i>
+                    </span>
+                    <span>Huggingface</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/tripletclip/TripletCLIP"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <center>
+          <img src="./static/images/figs/tripletclip_teaser.png" width="70%">
+        </center>
+        <h2 class="subtitle has-text-centered">
+          <span class="dnerf"></span>
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="footer">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Contrastive Language-Image Pretraining (CLIP) models maximize the mutual information between textual and
+              visual modalities to learn representations. However, the lack of compositional diversity in contemporary
+              image-text datasets limits the compositional
+              reasoning ability of CLIP. We show that generating ``hard'' negative captions via in-context learning and
+              synthesizing corresponding
+              negative images with text-to-image generators offers a solution. We introduce a novel contrastive
+              pre-training strategy that leverages these hard negative captions and
+              images in an alternating fashion to train CLIP. We demonstrate that our method, named <b
+                style="font-size: large;"><i>TripletCLIP</i></b>, when
+              applied to existing datasets such as CC3M and CC12M,
+              enhances the compositional capabilities of CLIP, resulting in an absolute improvement of over 9% on the
+              SugarCrepe benchmark on an equal computational budget, as well as improvements in zero-shot image
+              classification and image retrieval.
+
+          </div>
+        </div>
+      </div>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Dataset</h2>
+          <img src="./static/images/figs/tripletclip_dataset.png">
+          <h2 class="subtitle has-text-centered">
+            We generate a synthetic dataset to counter the lack of compositional diversity in CC3M and CC12M by
+            complimenting the dataset with hard negative captions and corresppnding negative images.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Methodology</h2>
+          <img src="./static/images/figs/tripletclip_method.png">
+          <h2 class="subtitle has-text-centered">
+            We propose a novel contrastive pre-training strategy that leverages these hard negative captions and images
+            in an alternating fashion to train TripletCLIP.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Performance</h2>
+          <img src="./static/images/figs/tripletclip_sugarcrepe.png">
+          <h2 class="subtitle has-text-centered">
+            Composition evaluations of the methods on SugarCrepe benchmark</b>.
+          </h2>
+          <br>
+          <br>
+          <img src="./static/images/figs/tripletclip_IRZC.png">
+          <h2 class="subtitle has-text-centered">
+            Zero-shot image-text retrieval and classification results</b>.
+          </h2>
+          <br>
+          <br>
+          <img src="./static/images/figs/tripletclip_highquality.png">
+          <h2 class="subtitle has-text-centered">
+            Ablation on filtering high-quality image-text pairs from TripletData</b>.
+          </h2>
+          <br>
+          <br>
+          <img src="./static/images/figs/tripletclip_lit.png">
+          <h2 class="subtitle has-text-centered">
+            What's holding back the CLIP models? Ablation w.r.t. frozen modality encoders.</b>
+          </h2>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+
+
+
+
+
+
+
+
+  <section class="footer" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{patel2024tripletclip,
+        author = {Patel, Maitreya and Kusumba, Abhiram and Cheng, Sheng and Kim, Changhoon and Gokhale, Tejas and Baral, Chitta and Yang, Yezhou},
+        title = {TripletCLIP: Improving Compositional Reasoning of CLIP via Synthetic Vision-Language Negatives},
+        journal={Advances in neural information processing systems},
+        year = {2024},
+    }</code></pre>
+    </div>
+  </section>
+
+  <!-- Project Previews Section -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Relevant Projects</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="project-previews">
+
+    <a href="https://eclipse.vercel.app/" class="project">
+      <img src="./static/images/eclipse.png">
+      <h3 class="title is-5">ECLIPSE (CVPR'24)</h3>
+      <p>A Resource-Efficient Text-to-Image Prior for Image Generations </p>
+    </a>
+
+    <a href="https://wouaf.vercel.app/" class="project">
+      <img src="./static/images/wouaf.png">
+      <h3 class="title is-5">WOUAF (CVPR'24)</h3>
+      <p>Weight Modulation for User Attribution and Fingerprinting in T2I Models. </p>
+    </a>
+  </section>
+
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="#">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/maitreyapatel" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <center>
+              <p>
+                This website template is take from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>
+                and
+                modified by <a href="https://maitreyapatel.com">Maitreya Patel</a>.
+              </p>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
